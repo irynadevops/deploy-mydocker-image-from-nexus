@@ -1,4 +1,5 @@
 #! /bin/bash
+apt install jq -y
 name=`kubectl get pods -A| grep docker | awk -F' ' '{print $2}'`
 a=`kubectl get pod $name -o json | jq '.status.containerStatuses[] | { "image": .image, "imageID": .imageID }'`
 
@@ -13,9 +14,9 @@ fi
 
 #kubectl set image deployment/application app-container=$IMAGE
 
-replica_spec=$(kubectl get deployment/$name -o jsonpath='{.spec.replicas}')
-kubectl scale --replicas=0 deployment $name
-kubectl scale --replicas=$replica_spec deployment $name
+#replica_spec=$(kubectl get deployment/docker -o jsonpath='{.spec.replicas}')
+#kubectl scale --replicas=0 deployment/docker
+#kubectl scale --replicas=$replica_spec deployment/docker
 
 
 b=`kubectl get pod $name -o json | jq '.status.containerStatuses[] | { "image": .image, "imageID": .imageID }'`
