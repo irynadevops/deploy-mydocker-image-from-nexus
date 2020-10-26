@@ -1,5 +1,5 @@
 #! /bin/bash
-apt install jq -y
+sudo apt-get install jq -y
 name=`kubectl get pods -A| grep docker | awk -F' ' '{print $2}'`
 a=`kubectl get pod $name -o json | jq '.status.containerStatuses[] | { "image": .image, "imageID": .imageID }'`
 
