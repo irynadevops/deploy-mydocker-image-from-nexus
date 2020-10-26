@@ -1,7 +1,8 @@
 #! /bin/bash
-sudo apt-get install jq -y
-name=`kubectl get pods -A| grep docker | awk -F' ' '{print $2}'`
-a=`kubectl get pod $name -o json | jq '.status.containerStatuses[] | { "image": .image, "imageID": .imageID }'`
+
+#apt-get install jq -y
+#name=`kubectl get pods -A| grep docker | awk -F' ' '{print $2}'`
+#a=`kubectl get pod $name -o json | jq '.status.containerStatuses[] | { "image": .image, "imageID": .imageID }'`
 
 export BUILD_NUMBER=$1
 kubectl apply -f docker-deploy.yaml
@@ -19,4 +20,4 @@ fi
 #kubectl scale --replicas=$replica_spec deployment/docker
 
 
-b=`kubectl get pod $name -o json | jq '.status.containerStatuses[] | { "image": .image, "imageID": .imageID }'`
+#b=`kubectl get pod $name -o json | jq '.status.containerStatuses[] | { "image": .image, "imageID": .imageID }'`
