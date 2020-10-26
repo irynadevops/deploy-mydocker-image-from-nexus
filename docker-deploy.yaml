@@ -1,0 +1,47 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: docker
+  name: docker
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: docker
+  template:
+    metadata:
+      labels:
+        app: docker
+    spec:
+      imagePullSecrets:
+      - name: regcred
+      containers:
+      - name: docker
+        image: 10.4.0.32:8083/hello:latest
+        imagePullPolicy: Always
+        ports:
+        - name: tomcat-port
+          containerPort: 8080
+        volumeMounts:
+        - name: docker-socket
+          mountPath: /var/run/docker.sock
+      securityContext:
+        fsGroup: 1000
+      volumes:
+      - name: docker-socket
+        hostPath:
+          path: /var/run/docker.sock
+          type: File
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: docker-service
+spec:
+  ports:
+  - port: 80
+    targetPort: 8080
+  type: ClusterIP
+  selector:
+    app: docker
