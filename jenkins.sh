@@ -7,9 +7,8 @@ kubectl create clusterrolebinding cluster-admin-binding --clusterrole cluster-ad
 kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/nginx-0.30.0/deploy/static/mandatory.yaml
 kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/nginx-0.30.0/deploy/static/provider/cloud-generic.yaml
 
-
-
-kubectl apply -f ingress.yaml
-kubectl apply -f docker-deploy.yaml
+#if 
+#kubectl rollout undo deployment/docker
+kubectl apply -f docker-deploy.yaml -env BUILD_NUMBER=$1
 
 
