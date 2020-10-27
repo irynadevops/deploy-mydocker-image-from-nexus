@@ -22,7 +22,6 @@ spec:
             valueFrom:
               configMapKeyRef:
                 name: image
-                key: image
           imagePullPolicy: Always
           ports:
             - name: tomcat-port
