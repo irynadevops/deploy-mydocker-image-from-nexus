@@ -1,0 +1,77 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: docker
+  name: docker
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: docker
+  template:
+    metadata:
+      labels:
+        app: docker
+    spec:
+      imagePullSecrets:
+        - name: my-secret
+      containers:
+        - name: docker
+          image: 10.4.0.32:8083/helloworld-izaitsava:latest
+          imagePullPolicy: Always
+          ports:
+            - name: tomcat-port
+              containerPort: 8080
+          volumeMounts:
+            - name: docker-socket
+              mountPath: /var/run/docker.sock
+      securityContext:
+        fsGroup: 1000
+      volumes:
+        - name: docker-socket
+          hostPath:
+            path: /var/run/docker.sock
+            type: File
+      readinessProbe:
+        httpGet:
+          port: 8080
+          path: /helloworld-ws/
+      livenessProbe:
+        httpGet:
+          port: 8080
+          path: /helloworld-ws/
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: docker-service
+spec:
+  ports:
+  - port: 80
+    targetPort: 8080
+  type: ClusterIP
+  selector:
+    app: docker
+---
+apiVersion: networking.k8s.io/v1beta1
+kind: Ingress
+metadata:
+  name: ingress-helloworld
+  annotations:
+    kubernetes.io/ingress.class: nginx
+    nginx.ingress.kubernetes.io/rewrite-target: /
+spec:
+  tls:
+    - hosts:
+        - helloworld-izaitsava.k8s.izaitsava.playpit.by
+        - nexus.k8s.izaitsava.playpit.by
+      secretName: my-secret
+  rules:
+    - host: helloworld-izaitsava.k8s.izaitsava.playpit.by
+      http:
+        paths:
+          - path: /
+            backend:
+              serviceName: docker-service
+              servicePort: 80
