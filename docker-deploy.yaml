@@ -15,24 +15,30 @@ spec:
         app: docker
     spec:
       imagePullSecrets:
-      - name: my-secret
+        - name: my-secret
       containers:
-      - name: docker
-        image: 10.4.0.32:8083/hello:{{ .Values.tag }}
-        imagePullPolicy: Always
-        ports:
-        - name: tomcat-port
-          containerPort: 8080
-        volumeMounts:
-        - name: docker-socket
-          mountPath: /var/run/docker.sock
-      securityContext:
+        - name: docker
+          env:
+            - name: TAG
+              valueFrom:
+                configMapKeyRef:
+                  name: tag
+                  key: image.tag
+          image: "10.4.0.32:8083/hello:$(TAG)"
+          imagePullPolicy: Always
+          ports:
+            - name: tomcat-port
+              containerPort: 8080
+          volumeMounts:
+            - name: docker-socket
+              mountPath: /var/run/docker.sock
+        securityContext:
         fsGroup: 1000
       volumes:
-      - name: docker-socket
-        hostPath:
-          path: /var/run/docker.sock
-          type: File
+        - name: docker-socket
+          hostPath:
+            path: /var/run/docker.sock
+            type: File
   strategy:
     type: RollingUpdate
 ---

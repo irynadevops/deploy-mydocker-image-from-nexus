@@ -14,7 +14,7 @@ envsubst < kubectl apply -f docker-deploy.yaml
 #kubectl scale --replicas=0 deployment application
 #kubectl scale --replicas=1 deployment application
 
-#kubectl set image deployment/application app-container=$IMAGE
+#kubectl set image deployment/docker app-container=$IMAGE
 
 #replica_spec=$(kubectl get deployment/docker -o jsonpath='{.spec.replicas}')
 #kubectl scale --replicas=0 deployment/docker
