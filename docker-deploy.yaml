@@ -4,6 +4,8 @@ metadata:
   labels:
     app: docker
   name: docker
+  annotation:
+    checksum/config: {{ include (print $.Template.BasePath "/configmap.yaml") . | sha256sum }}
 spec:
   replicas: 1
   selector:
@@ -18,12 +20,9 @@ spec:
       - name: my-secret
       containers:
       - name: docker
-        env:
-          - name: BUILD_NUMBER
-            valueFrom:
-            configMapKeyRef:
+        envFrom:
+          - configMapRef:
               name: tag
-              key: BUILD_NUMBER
         image: 10.4.0.32:8083/hello:$(BUILD_NUMBER)
         imagePullPolicy: Always
         ports:
