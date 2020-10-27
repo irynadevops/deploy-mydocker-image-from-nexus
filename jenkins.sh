@@ -3,7 +3,7 @@
 #apt-get install jq -y
 #name=`kubectl get pods -A| grep docker | awk -F' ' '{print $2}'`
 #a=`kubectl get pod $name -o json | jq '.status.containerStatuses[] | { "image": .image, "imageID": .imageID }'`
-apt-get install -y gettext-base
+sudo apt-get install -y gettext-base
 export BUILD_NUMBER=$1
 envsubst < kubectl apply -f docker-deploy.yaml
 #sleep 200

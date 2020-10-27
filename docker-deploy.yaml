@@ -20,8 +20,11 @@ spec:
       - name: docker
         env:
           - name: BUILD_NUMBER
-            value: $BUILD_NUMBER
-        image: 10.4.0.32:8083/hello:$BUILD_NUMBER
+            valueFrom:
+            configMapKeyRef:
+              name: tag
+              key: BUILD_NUMBER
+        image: 10.4.0.32:8083/hello:$(BUILD_NUMBER)
         imagePullPolicy: Always
         ports:
         - name: tomcat-port
@@ -68,7 +71,7 @@ spec:
     - host: helloworld-izaitsava.k8s.izaitsava.playpit.by
       http:
         paths:
-          - path: /
+          - path: /helloworld-ws(/|$)(.*)
             backend:
               serviceName: docker-service
               servicePort: 80
