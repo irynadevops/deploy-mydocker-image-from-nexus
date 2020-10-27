@@ -70,7 +70,7 @@ spec:
     - host: helloworld-izaitsava.k8s.izaitsava.playpit.by
       http:
         paths:
-          - path: /helloworld-ws(/|$)(.*)
+          - path: /
             backend:
               serviceName: docker-service
               servicePort: 80
