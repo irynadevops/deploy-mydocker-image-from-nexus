@@ -25,7 +25,7 @@ spec:
                 configMapKeyRef:
                   name: tag
                   key: image.tag
-          image: "10.4.0.32:8083/helloworld-izaitsava:$IMAGE"
+          image: "10.4.0.32:8083/helloworld-izaitsava:$(IMAGE)"
           imagePullPolicy: Always
           ports:
             - name: tomcat-port
