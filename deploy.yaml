@@ -19,7 +19,13 @@ spec:
         - name: regcred
       containers:
         - name: docker
-          image: "10.4.0.32:8083/helloworld-izaitsava:latest"
+          env:
+            - name: IMAGE
+              valueFrom:
+              configMapKeyRef:
+                name: tag
+                key: image.tag
+          image: "10.4.0.32:8083/helloworld-izaitsava:\$(IMAGE)"
           imagePullPolicy: Always
           ports:
             - name: tomcat-port
