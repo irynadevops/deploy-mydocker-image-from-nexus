@@ -13,8 +13,6 @@ spec:
     metadata:
       labels:
         app: docker
-      annotations:
-        checksum/config: {{ sha256sum .Values.image.tag }}
     spec:
       imagePullSecrets:
       - name: my-secret
@@ -23,8 +21,7 @@ spec:
         envFrom:
           - configMapRef:
               name: tag
-        image: 10.4.0.32:8083/hello
-        tag: $(BUILD_NUMBER)
+        image: 10.4.0.32:8083/hello:$(BUILD_NUMBER)
         imagePullPolicy: Always
         ports:
         - name: tomcat-port
