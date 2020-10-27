@@ -1,11 +1,9 @@
-apiVersion: apps/v1
+apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
   labels:
     app: docker
   name: docker
-  annotation:
-    checksum/config: {{ include (print $.Template.BasePath "/configmap.yaml") . | sha256sum }}
 spec:
   replicas: 1
   selector:
@@ -15,6 +13,8 @@ spec:
     metadata:
       labels:
         app: docker
+      annotations:
+        checksum/config: {{ sha256sum .Values.image.tag }}
     spec:
       imagePullSecrets:
       - name: my-secret
@@ -23,7 +23,8 @@ spec:
         envFrom:
           - configMapRef:
               name: tag
-        image: 10.4.0.32:8083/hello:$(BUILD_NUMBER)
+        image: 10.4.0.32:8083/hello
+        tag: $(BUILD_NUMBER)
         imagePullPolicy: Always
         ports:
         - name: tomcat-port
