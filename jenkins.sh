@@ -6,10 +6,10 @@
 
 export BUILD_NUMBER=$1
 kubectl apply -f docker-deploy.yaml
-sleep 200
-if [ $(curl -s -o /dev/null -I -w "%{http_code}"  http://helloworld-izaitsava.k8s.izaitsava.playpit.by/helloworld-ws/) -ne 200 ]; then
-  kubectl rollout undo deployment/$name
-fi
+#sleep 200
+#if [ $(curl -s -o /dev/null -I -w "%{http_code}"  http://helloworld-izaitsava.k8s.izaitsava.playpit.by/helloworld-ws/) -ne 200 ]; then
+ # kubectl rollout undo deployment $name
+#fi
 
 #kubectl scale --replicas=0 deployment application
 #kubectl scale --replicas=1 deployment application
