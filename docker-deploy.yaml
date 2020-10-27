@@ -19,12 +19,11 @@ spec:
       containers:
       - name: docker
         env:
-          - name: BUILD_NUMBER
+          - name: TAG
             valueFrom:
               configMapKeyRef:
                 name: tag
-                key: BUILD_NUMBER
-        image: 10.4.0.32:8083/hello:$(BUILD_NUMBER)
+        image: 10.4.0.32:8083/hello:$(TAG)
         imagePullPolicy: Always
         ports:
         - name: tomcat-port
