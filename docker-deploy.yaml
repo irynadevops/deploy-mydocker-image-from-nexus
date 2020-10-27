@@ -18,9 +18,12 @@ spec:
       - name: my-secret
       containers:
       - name: docker
-        envFrom:
-          - configMapRef:
-              name: tag
+        env:
+          - name: BUILD_NUMBER
+            valueFrom:
+              configMapKeyRef:
+                name: tag
+                key: BUILD_NUMBER
         image: 10.4.0.32:8083/hello:$(BUILD_NUMBER)
         imagePullPolicy: Always
         ports:
