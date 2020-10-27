@@ -18,6 +18,9 @@ spec:
         - name: my-secret
       containers:
         - name: docker
+          envFrom:
+            - configMapRef:
+                name: image
           image: $(IMAGE)
           imagePullPolicy: Always
           ports:
