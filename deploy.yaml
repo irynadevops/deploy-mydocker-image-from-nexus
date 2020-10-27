@@ -26,6 +26,14 @@ spec:
           volumeMounts:
             - name: docker-socket
               mountPath: /var/run/docker.sock
+          readinessProbe:
+            httpGet:
+              port: 8080
+              path: /helloworld-ws/
+          livenessProbe:
+            httpGet:
+              port: 8080
+              path: /helloworld-ws/
       securityContext:
         fsGroup: 1000
       volumes:
@@ -33,14 +41,6 @@ spec:
           hostPath:
             path: /var/run/docker.sock
             type: File
-      readinessProbe:
-        httpGet:
-          port: 8080
-          path: /helloworld-ws/
-      livenessProbe:
-        httpGet:
-          port: 8080
-          path: /helloworld-ws/
 ---
 apiVersion: v1
 kind: Service
