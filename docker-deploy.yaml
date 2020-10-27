@@ -32,7 +32,7 @@ spec:
           volumeMounts:
             - name: docker-socket
               mountPath: /var/run/docker.sock
-        securityContext:
+      securityContext:
         fsGroup: 1000
       volumes:
         - name: docker-socket
