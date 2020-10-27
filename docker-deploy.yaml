@@ -18,11 +18,11 @@ spec:
         - name: my-secret
       containers:
         - name: docker
-          image: 
+          image:
             valueFrom:
               configMapKeyRef:
-                name: tag
-                key: image.tag
+                name: image
+                key: image
           imagePullPolicy: Always
           ports:
             - name: tomcat-port
