@@ -24,7 +24,13 @@ spec:
               configMapKeyRef:
                 name: tag
                 key: image.tag
-        image: 10.4.0.32:8083/hello:"$(VERSION)"
+        image: 
+          repository: 10.4.0.32:8083/hello
+          tag: 
+            valueFrom:
+              configMapKeyRef:
+                name: tag
+                key: image.tag
         imagePullPolicy: Always
         ports:
         - name: tomcat-port
