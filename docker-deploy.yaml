@@ -14,7 +14,7 @@ spec:
       labels:
         app: docker
     spec:
-      terminationGracePeriodSeconds: 30
+      terminationGracePeriodSeconds: 150
       imagePullSecrets:
         - name: my-secret
       containers:
