@@ -20,8 +20,8 @@ spec:
       - name: docker
         env:
           - name: BUILD_NUMBER
-            value: "$BUILD_NUMBER"
-        image: 10.4.0.32:8083/hello:"$BUILD_NUMBER"
+            value: $BUILD_NUMBER
+        image: 10.4.0.32:8083/hello:$BUILD_NUMBER
         imagePullPolicy: Always
         ports:
         - name: tomcat-port
