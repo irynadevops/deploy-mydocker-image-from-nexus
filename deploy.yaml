@@ -15,7 +15,7 @@ spec:
         app: docker
     spec:
       imagePullSecrets:
-        - name: my-secret
+        - name: my-secret2
       containers:
         - name: docker
           image: 10.4.0.32:8083/helloworld-izaitsava:latest
@@ -66,7 +66,7 @@ spec:
     - hosts:
         - helloworld-izaitsava.k8s.izaitsava.playpit.by
         - nexus.k8s.izaitsava.playpit.by
-      secretName: my-secret
+      secretName: my-secret2
   rules:
     - host: helloworld-izaitsava.k8s.izaitsava.playpit.by
       http:
