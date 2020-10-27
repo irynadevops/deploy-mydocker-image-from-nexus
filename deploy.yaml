@@ -15,7 +15,7 @@ spec:
         app: docker
     spec:
       imagePullSecrets:
-        - name: my-secret
+        - name: regcred
       containers:
         - name: docker
           image: 10.4.0.32:8083/helloworld-izaitsava:latest
