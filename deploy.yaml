@@ -15,6 +15,7 @@ spec:
       labels:
         app: docker
     spec:
+      terminationGracePeriodSeconds: 150
       imagePullSecrets:
         - name: regcred
       containers:
@@ -48,6 +49,8 @@ spec:
           hostPath:
             path: /var/run/docker.sock
             type: File
+  strategy:
+    type: RollingUpdate
 ---
 apiVersion: v1
 kind: Service
