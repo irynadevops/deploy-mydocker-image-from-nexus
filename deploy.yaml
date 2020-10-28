@@ -16,7 +16,7 @@ spec:
         app: docker
     spec:
       imagePullSecrets:
-        - name: regcr
+        - name: regcred
       containers:
         - name: docker
           env:
